@@ -1,7 +1,7 @@
 # censor-kit
 
 [![Build Status](https://github.com/0xbadcoffee/censor-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/0xbadcoffee/censor-kit/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/@0xbadc0ffe/censorkit)](https://www.npmjs.com/package/@0xbadc0ffe/censorkit)
+[![npm version](https://img.shields.io/npm/v/censorkit)](https://www.npmjs.com/package/censorkit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A high-performance, developer-friendly profanity filter for modern applications.
@@ -17,9 +17,9 @@ A high-performance, developer-friendly profanity filter for modern applications.
 ## 📦 Installation
 
 ```bash
-pnpm add @0xbadc0ffe/censorkit
+pnpm add censorkit
 # or
-npm install @0xbadc0ffe/censorkit
+npm install censorkit
 ```
 
 ## 🛠️ Usage
@@ -27,7 +27,7 @@ npm install @0xbadc0ffe/censorkit
 ### Quick Start
 
 ```javascript
-import { WordFilter } from '@0xbadc0ffe/censorkit';
+import { WordFilter } from 'censorkit';
 
 const filter = new WordFilter({
     dictionaries: ['english'], // Load built-in English dictionary
