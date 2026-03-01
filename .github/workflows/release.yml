@@ -39,6 +39,7 @@ jobs:
           const fs = require('fs');
           const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
           p.version = '${{ steps.version.outputs.version }}';
+          p.name = '@0xbadcoffee/censorkit';
           fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
           "
 
@@ -54,9 +55,9 @@ jobs:
       - name: Publish to npm
         run: |
           if [ "${{ steps.version.outputs.is_beta }}" = "true" ]; then
-            pnpm publish --no-git-checks --tag beta
+            pnpm publish --no-git-checks --access public --tag beta
           else
-            pnpm publish --no-git-checks
+            pnpm publish --no-git-checks --access public
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -66,7 +67,6 @@ jobs:
           node -e "
           const fs = require('fs');
           const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-          p.name = '@0xbadcoffee/censorkit';
           p.publishConfig = { registry: 'https://npm.pkg.github.com' };
           fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
           "

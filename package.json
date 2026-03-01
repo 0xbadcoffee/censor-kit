@@ -1,5 +1,5 @@
 {
-	"name": "censorkit",
+	"name": "@0xbadcoffee/censorkit",
 	"version": "0.1.0-beta",
 	"description": "Powerful, fast profanity filter with leet-speak, homoglyph and phonetic support.",
 	"main": "dist/index.js",
