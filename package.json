@@ -1,0 +1,38 @@
+{
+  "name": "censorkit",
+  "version": "0.1.0-beta",
+  "description": "Powerful, fast profanity filter with leet-speak, homoglyph and phonetic support.",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xbadcoffee/censor-kit.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "keywords": [
+    "profanity",
+    "censor",
+    "filter",
+    "leet",
+    "homoglyph",
+    "trie",
+    "regex"
+  ],
+  "author": "0xbadcoffee <0xbadc0ffe@proton.me>",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.4",
+    "@types/node": "^25.3.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017"
+}

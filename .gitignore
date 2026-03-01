@@ -1,0 +1,16 @@
+node_modules
+dist
+.DS_Store
+*.log
+.env
+.idea
+.vscode
+.gemini
+coverage
+pnpm-lock.yaml
+temp-sentences.ts
+sample-bad-words.txt
+test-input.txt
+bad-words.txt
+test-dist.js
+cleaned-sentences.json
