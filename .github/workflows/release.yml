@@ -67,10 +67,11 @@ jobs:
           node -e "
           const fs = require('fs');
           const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          p.name = '@0xbadcoffee/censorkit';
           p.publishConfig = { registry: 'https://npm.pkg.github.com' };
           fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
           "
-          echo "@0xbadc0ffe:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "@0xbadcoffee:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
           if [ "${{ steps.version.outputs.is_beta }}" = "true" ]; then
             pnpm publish --no-git-checks --tag beta
