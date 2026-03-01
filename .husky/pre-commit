@@ -1,0 +1,4 @@
+pnpm run format
+git add -u
+pnpm run lint
+pnpm run test
