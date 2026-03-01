@@ -7,7 +7,6 @@ dist
 .vscode
 .gemini
 coverage
-pnpm-lock.yaml
 temp-sentences.ts
 sample-bad-words.txt
 test-input.txt
