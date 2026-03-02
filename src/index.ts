@@ -5,6 +5,7 @@ export * from "./dictionaries/english.js";
 export * from "./dictionaries/spanish.js";
 export * from "./dictionary/manager.js";
 export * from "./dictionary/types.js";
+export * from "./normalizer/contraction-suffixes.js";
 export * from "./normalizer/leet-map.js";
 export * from "./normalizer/normalize.js";
 export * from "./types/index.js";

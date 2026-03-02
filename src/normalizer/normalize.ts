@@ -1,3 +1,7 @@
+import {
+	isApostropheLike,
+	isContractionSuffix,
+} from "./contraction-suffixes.js";
 import { homoglyphMap } from "./homoglyph-map.js";
 import { leetMap } from "./leet-map.js";
 import { phoneticRules } from "./phonetic-map.js";
@@ -45,8 +49,12 @@ export function normalizeText(
 			continue;
 		}
 		if (options.ignoreIntrawordPunctuation && isPunct && !leetChar) {
-			offset += charLength;
-			continue;
+			const keepApostrophe =
+				isApostropheLike(origChar) && isContractionSuffix(chars, i + 1);
+			if (!keepApostrophe) {
+				offset += charLength;
+				continue;
+			}
 		}
 		if (options.ignoreIntrawordNoise && isNoise) {
 			offset += charLength;

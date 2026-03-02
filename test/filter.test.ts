@@ -489,6 +489,21 @@ describe("ignoreIntrawordPunctuation option", () => {
 		expect(filter.clean("@ss").cleaned).toBe("***");
 		expect(filter.clean("sh!t").cleaned).toBe("****");
 	});
+
+	test("fu'ck (apostrophe obfuscation) censored when ignoreIntrawordPunctuation: true", () => {
+		const filter = new WordFilter({ ignoreIntrawordPunctuation: true });
+		filter.addWord("fuck");
+		expect(filter.clean("fu'ck").matches.length).toBe(1);
+		expect(filter.clean("fu'ck").cleaned).toBe("**'**");
+	});
+
+	test("he'll not censored with ignoreIntrawordPunctuation (contraction rule keeps apostrophe)", () => {
+		const filter = new WordFilter({ ignoreIntrawordPunctuation: true });
+		filter.addWord("hell");
+		expect(filter.clean("he'll be back").cleaned).toBe("he'll be back");
+		expect(filter.clean("he'll").cleaned).toBe("he'll");
+		expect(filter.clean("what the hell").cleaned).toBe("what the ****");
+	});
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -936,6 +951,21 @@ describe("False positive prevention", () => {
 			"a shell on the beach",
 		);
 		expect(filter.clean("she held it").cleaned).toBe("she held it");
+	});
+
+	test("he'll (contraction) not censored — apostrophe breaks hell match", () => {
+		const filter = new WordFilter();
+		filter.addWord("hell");
+		expect(filter.clean("he'll be back").cleaned).toBe("he'll be back");
+		expect(filter.clean("he'll").cleaned).toBe("he'll");
+		expect(filter.clean("what the hell").cleaned).toBe("what the ****");
+	});
+
+	test("fu'ck (apostrophe obfuscation) not censored by default", () => {
+		const filter = new WordFilter();
+		filter.addWord("fuck");
+		expect(filter.clean("fu'ck").cleaned).toBe("fu'ck");
+		expect(filter.clean("fu'ck").matches.length).toBe(0);
 	});
 
 	test("sex not triggered in: sextant, Essex, sextet", () => {
