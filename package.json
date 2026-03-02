@@ -1,6 +1,6 @@
 {
 	"name": "censorkit",
-	"version": "0.1.0-beta",
+	"version": "0.2.0",
 	"description": "Powerful, fast profanity filter with leet-speak, homoglyph and phonetic support.",
 	"main": "dist/index.js",
 	"files": [
