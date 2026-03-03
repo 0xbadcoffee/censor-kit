@@ -42,6 +42,8 @@ export interface FilterOptions {
 	dictionaries?: ("english" | "spanish")[];
 	/** Array of custom words or a single newline-separated string */
 	customWords?: string[] | string;
+	/** Words to allow (e.g. "bass", "scunthorpe"); not censored even if they contain banned substrings */
+	allowWords?: string[];
 	replacement?: string;
 	/** String used when maskStyle is "fixed". Default: "***" */
 	fixedMask?: string;
