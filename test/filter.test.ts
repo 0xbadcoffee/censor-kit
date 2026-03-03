@@ -290,6 +290,57 @@ describe("Allowlist (allow())", () => {
 	});
 });
 
+describe("Allowlist (allowWords option and method)", () => {
+	test("constructor allowWords: list of allowed words not censored", () => {
+		const filter = new WordFilter({
+			customWords: ["ass"],
+			allowWords: ["bass", "class", "mass"],
+		});
+
+		expect(filter.clean("bass, class, mass").cleaned).toBe("bass, class, mass");
+		expect(filter.clean("kick ass").cleaned).toBe("kick ***");
+	});
+
+	test("constructor allowWords: Scunthorpe-style", () => {
+		const filter = new WordFilter({
+			customWords: ["cunt"],
+			allowWords: ["scunthorpe"],
+		});
+
+		expect(filter.clean("I visited Scunthorpe").cleaned).toBe(
+			"I visited Scunthorpe",
+		);
+		expect(filter.clean("you cunt").cleaned).toBe("you ****");
+	});
+
+	test("instance allowWords(words): batch add allowed words", () => {
+		const filter = new WordFilter({ customWords: ["ass"] });
+		filter.allowWords(["bass", "class", "mass"]);
+
+		expect(filter.clean("bass, class, mass").cleaned).toBe("bass, class, mass");
+		expect(filter.clean("kick ass").cleaned).toBe("kick ***");
+	});
+
+	test("allowWords entries do not appear in getWords()", () => {
+		const filter = new WordFilter({
+			customWords: ["ass"],
+			allowWords: ["bass", "class"],
+		});
+
+		expect(filter.getWords()).not.toContain("bass");
+		expect(filter.getWords()).not.toContain("class");
+		expect(filter.getWords()).toContain("ass");
+	});
+
+	test("allow() and allowWords can be combined", () => {
+		const filter = new WordFilter({ customWords: ["ass"] });
+		filter.allowWords(["bass", "class"]);
+		filter.allow("mass");
+
+		expect(filter.clean("bass, class, mass").cleaned).toBe("bass, class, mass");
+	});
+});
+
 // ─────────────────────────────────────────────────────────────────────────────
 // PHONETIC NORMALISATION  — phonetic: true
 // ─────────────────────────────────────────────────────────────────────────────

@@ -40,6 +40,12 @@ export class WordFilter {
 			this.dictionary.addWords(this.options.customWords);
 		}
 
+		if (this.options.allowWords?.length) {
+			for (const word of this.options.allowWords) {
+				this.dictionary.addWord(word, 0);
+			}
+		}
+
 		this._rebuildMatcher();
 	}
 
@@ -85,11 +91,14 @@ export class WordFilter {
 	}
 
 	allow(word: string) {
-		// Treat as word with 0 severity or ignore it in the results, or we can just remove it
-		// Wait, allowlist means if they say "bass", it shouldn't match "ass" inside it.
-		// The simplest MVP implementation of allow for now is just a separate allowlist.
-		// However, if we're just ignoring partial matches, we could add it to a Trie with severity 0.
 		this.dictionary.addWord(word, 0);
+		this._rebuildMatcher();
+	}
+
+	allowWords(words: string[]) {
+		for (const word of words) {
+			this.dictionary.addWord(word, 0);
+		}
 		this._rebuildMatcher();
 	}
 
