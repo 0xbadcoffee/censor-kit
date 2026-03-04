@@ -17,6 +17,8 @@ A high-performance, developer-friendly profanity filter for modern applications.
 - **Allowlist** – Mark words as safe (e.g. "Scunthorpe", "bass") so substrings are not censored.
 - **Extensible** – Built-in English/Spanish dictionaries, custom word arrays or newline-separated strings, optional transformers.
 
+**For AI agents:** See [llm.txt](./llm.txt) for a concise library usage guide.
+
 ---
 
 ## Installation

@@ -1,0 +1,74 @@
+# censor-kit – library usage guide for AI agents
+
+Package: censorkit (npm) | Entry: dist/index.js (ESM)
+
+## Purpose
+
+High-performance profanity filter: trie-based matching, leetspeak/homoglyph/phonetic normalisation, configurable word boundaries, built-in English/Spanish dictionaries, allowlist for false positives.
+
+## Primary API
+
+- **WordFilter** – main class. Construct with options; call `clean(text)` to get cleaned text and matches.
+
+```javascript
+import { WordFilter } from "censorkit";
+
+const filter = new WordFilter({
+  dictionaries: ["english"],
+  customWords: ["my-forbidden-word"],
+  normalize: true,
+  leet: true,
+});
+
+const result = filter.clean("Don't use that word here!");
+// result.original, result.cleaned, result.matches
+```
+
+## Constructor options (essential)
+
+| Option | Type | Default | Notes |
+|--------|------|---------|--------|
+| dictionaries | ("english" \| "spanish")[] | – | Built-in lists. |
+| customWords | string[] or string | – | Extra words; string = newline-separated. |
+| normalize | boolean | true | NFKD, strip diacritics. |
+| leet | boolean | true | @→a, 3→e, etc. |
+| collapseRepeats | boolean | true | fuuuck → fuck. |
+| ignoreSpaces | boolean | false | Ignore spaces between letters. |
+| ignoreIntrawordPunctuation | boolean | false | Ignore punctuation between letters; keeps contractions (he'll, it's) safe, catches fu'ck. |
+| ignoreIntrawordNoise | boolean | false | Ignore digits/symbols between letters. |
+| homoglyphs | boolean | false | Cyrillic/Greek lookalikes → Latin. |
+| phonetic | boolean | false | ph→f, ck→k, etc. |
+| boundaryMode | "strict" \| "loose" \| "none" | "strict" | Word boundaries. |
+| minimumMatchRatio | number | 0.6 | Skip match if match length / word length < this (e.g. "ass" in "assistant"). |
+| maskStyle | "char" \| "replace" \| "fixed" | "char" | How to mask. |
+| maskChar | string | "*" | For maskStyle "char". |
+| replacement | string | "[REDACTED]" | For maskStyle "replace". |
+| fixedMask | string | "***" | For maskStyle "fixed". |
+| transformers | ((text: string) => string)[] | – | Run before normalisation. |
+
+## Result shape
+
+- **filter.clean(text)** returns: `{ original, cleaned, matches }`.
+- **matches**: array of `{ word, index, end, original, severity }` (MatchResult).
+
+## Runtime methods
+
+- **Dictionary**: `addWord(word, severity?)`, `addWords(words)` (array or newline string), `removeWord(word)`, `clearWords()`, `hasWord(word)`, `getWords()`, `loadDictionary("english"|"spanish"|custom)`.
+- **Allowlist**: `allow(word)` – word never censored (e.g. "Scunthorpe", "bass"); allowlisted words not in `getWords()`.
+
+## Exports (for extension)
+
+WordFilter, FilterOptions, FilterResult, MatchResult; CONTRACTION_SUFFIXES, isApostropheLike, isContractionSuffix; normalizeText; english, spanish; Dictionary, DictionaryEntry, DictionaryManager; Matcher, Trie.
+
+## Quick patterns
+
+- **Check for any match**: `filter.clean(input).matches.length > 0`.
+- **Strict moderation (obfuscation, keep contractions)**: `ignoreIntrawordPunctuation: true`, `phonetic: true`, `homoglyphs: true`.
+- **Custom replace**: `maskStyle: "replace", replacement: "[FILTERED]"`.
+- **Node: words from file**: `filter.addWords(fs.readFileSync("bad-words.txt", "utf-8"))`.
+
+## TypeScript
+
+Types included: FilterOptions, FilterResult, MatchResult. Import from "censorkit".
+
+Full docs: see README.md in this repo.
