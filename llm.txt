@@ -39,7 +39,7 @@ const result = filter.clean("Don't use that word here!");
 | homoglyphs | boolean | false | Cyrillic/Greek lookalikes → Latin. |
 | phonetic | boolean | false | ph→f, ck→k, etc. |
 | boundaryMode | "strict" \| "loose" \| "none" | "strict" | Word boundaries. |
-| minimumMatchRatio | number | 0.6 | Skip match if match length / word length < this (e.g. "ass" in "assistant"). |
+| minimumMatchRatio | number | 0.6 | Skip match if match length / enclosing word length < this (e.g. "ass" in "assistant"). |
 | maskStyle | "char" \| "replace" \| "fixed" | "char" | How to mask. |
 | maskChar | string | "*" | For maskStyle "char". |
 | replacement | string | "[REDACTED]" | For maskStyle "replace". |
